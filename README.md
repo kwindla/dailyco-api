@@ -1,8 +1,3 @@
----
-layout: default
-title: Daily.co API
----
-
 Using the Daily.co API, you can manage domains, teams, and video call rooms.
 
 There are currently five API methods:
