@@ -1,0 +1,215 @@
+openapi: 3.0.0  
+info:
+  description: Daily.co API
+  version: 0.1.0
+  title: Daily.co API
+  termsOfService: https://www.daily.co/terms-of-service
+  contact:
+    email: "help@daily.co"
+servers:
+  - url: https://prod-ks.pluot.
+security:
+  - BearerAuth: []
+paths:
+  /domains/by-name/{team-name}:
+    get:
+      summary: Get team info
+      description: Returns a team invite link, a list of rooms, and a list of users..
+      parameters:
+        - name: "team-name"
+          in: "path"
+          description: "name of team"
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Team info or error string
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TeamInfo'
+                  - $ref: '#/components/schemas/ErrorInfo'
+                
+  /domains/by-name/{team-name}/room:
+    post:
+      summary: Create a room
+      parameters:
+        - name: "team-name"
+          in: "path"
+          description: "name of team"
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: specify the name of the new room
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example: { name: "daily-standup" }
+              properties:
+                name:
+                  description: the room name
+                  type: string
+      responses:
+        200:
+          description: Room info or error string
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TeamInfo'
+                  - $ref: '#/components/schemas/ErrorInfo'
+                  
+  /domains/by-name/{team-name}/room/{room-name}:
+    delete:
+      summary: Delete a room
+      parameters:
+        - name: "team-name"
+          in: "path"
+          description: "name of team"
+          required: true
+          schema:
+            type: string
+        - name: "room-name"
+          in: "path"
+          description: "name of room"
+          required: true
+          schema:
+            type: string    
+      responses:
+        200:
+          description: Deleted true indicator or error string
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DeletedTrue'
+                  - $ref: '#/components/schemas/ErrorInfo'
+
+  /domains/by-name/{team-name}/user/{user-email}:
+    delete:
+      summary: Remove a user from a team
+      parameters:
+        - name: "team-name"
+          in: "path"
+          description: "name of team"
+          required: true
+          schema:
+            type: string
+        - name: "user-email"
+          in: "path"
+          description: "email address of user"
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Deleted true indicator or error string
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DeletedTrue'
+                  - $ref: '#/components/schemas/ErrorInfo'
+                  
+  /domains/claim:
+    post:
+      summary: Create a team/domain
+      requestBody:
+        description: specify the name of the new team
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example: { name: "new-awesome-team-12" }
+              properties:
+                name:
+                  description: the team name
+                  type: string
+      responses:
+        200:
+          description: Team info or error string
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TeamInfo'
+                  - $ref: '#/components/schemas/ErrorInfo'
+            
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    ErrorInfo:
+      type: object
+      properties:
+        error:
+          description: an error, if the request is not going to return team info
+          type: string
+    DeletedTrue:
+      type: object
+      properties:
+        deleted:
+          description: will contain boolean true
+          type: boolean
+    RoomInfo:
+      type: object
+      properties:
+        name:
+          description: the name of the room
+          type: string
+        dialInPIN:
+          description: the unique telephone dial-in PIN for the room
+          type: string
+          pattern: '^\d{6}'
+    TeamInfo:
+      type: object
+      properties:
+          name:
+            description: the name of the team
+            type: string
+          teamInviteLink:
+            description: the invite link for the team
+            type: string
+            format: uri
+          rooms:
+            description: a list of all rooms under this team
+            type: array
+            items:
+              $ref: '#/components/schemas/RoomInfo'
+          users:
+            description: a hash of all users that are currently members of the team. keys are user email addresses
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                email:
+                  description: the users's email address
+                  type: string
+                  format: email
+                name:
+                  description: the users's name (if we have it)
+                  type: string
+                avatarSrc:
+                  description: uri pointing to the user's avatar image (if we have it)
+                  type: string
+                  format: uri
+                role:
+                  description: the user's role for this team, either "owner" or "member"
+                  type: string
+                  enum: [owner, member]
+            example:
+              user@foo.com:
+                email: user@foo.com
+                name: A. User
+                avatarSrc: https://some.server.com/image.jpg
+                role: member
+                
+                
