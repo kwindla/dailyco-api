@@ -15,7 +15,7 @@ All API requests are served by: `https://prod-ks.pluot.blue/`
 
 Methods that take argument bodies all expect JSON-formatted data.
 
-All data is returned as JSON. All methods return JSON objects that include the fields documented below, but the objects may have **additional** fields, as well, as we add to the API. Please be lenient in the data you accept, and also don't count on receiving any data other than what is documented here.
+All data is returned as JSON. All methods return JSON objects that include the fields documented below, but the objects may have *additional* fields, as well, as we add to the API. Please be lenient in the data you accept, and also don't count on receiving any data other than what is documented here.
 
 We strive to return an HTTP 200 response for every API request. Errors are reported as an `error` field in the JSON-formatted response object. We only return non-200 HTTP responses if there was a network, gateway, or unexpected and unanticipated server error.
 
@@ -31,7 +31,7 @@ curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XGET
 
 ## <a name="api-team-info"></a>Get invite link, rooms list, and user list for a team
 
-*GET `/domains/by-name/<team-name>`*
+**GET `/domains/by-name/<team-name>`**
 
 ```
 > curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XGET https://prod-ks.pluot.blue/domains/by-name/my-awesome-team
@@ -67,7 +67,7 @@ Note that users are guaranteed to have an email address and role, but they may n
 
 ## <a name="api-room-info"></a>Create a room
 
-*POST to `/domains/by-name/<team-name>/room`*
+**POST to `/domains/by-name/<team-name>/room`**
 
 *Request body: `{ "name": <room-name> }`*
 
@@ -95,7 +95,7 @@ Returns an error object, with a message field.
 
 ### <a name="api-room-delete"></a>Delete a room
 
-*DELETE `/domains/by-name/<team-name>/room/<room-name>`*
+**DELETE `/domains/by-name/<team-name>/room/<room-name>`**
 
 ```
 curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XDELETE http://prod-ks.pluot.blue/domains/by-name/my-awesome-team/room/an-old-room
@@ -121,7 +121,7 @@ Returns an error object, with a message field.
 
 Removes a user from the team. (Remember that there is no way to add a user to a team. You can send a team invite link, but the user must click through the link and sign up or log in. You can, however, remove a user from a team at any time, using this API method.)
 
-*DELETE `/domains/by-name/<team-name>/user/<user-email>`*
+**DELETE `/domains/by-name/<team-name>/user/<user-email>`**
 
 ```
 > curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XDELETE https://prod-ks.pluot.blue/domains/by-name/my-awesome-team/user/kwindla@gmail.com
@@ -147,9 +147,9 @@ Returns an error object, with a message field.
 
 Creates a new team (a new Daily.co domain). The new team will be owned by the user making the API call. You will need an additional permission attached to your developer token in order to use this method. Please contact us at help@daily.co if you have a use case for creating multiple teams/domains.
 
-*POST `/domains/claim`
+**POST `/domains/claim`**
 
-*Request body: `{ "domain": <team-name> }`*
+**Request body: `{ "domain": <team-name> }`**
 
 ```
 > curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XPOST -d '{"domain":"awesome-team-2"}' https://prod-ks.pluot.blue/domains/claim
