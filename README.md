@@ -27,6 +27,8 @@ Each API call will need to include your access token, in an `Authorization: Bear
 curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XGET https://prod-ks.pluot.blue/domains/by-name/my-awesome-team
 ```
 
+[Here is a specification file](dailyco-api-openapi3.yaml) in Swagger/OpenAPI-3.0 format is available.
+
 # Methods
 
 ## <a name="api-team-info"></a>Get invite link, rooms list, and user list for a team
