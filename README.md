@@ -1,7 +1,7 @@
 Using the Daily.co API, you can manage domains, teams, and video call rooms.
 
 There are currently five API methods:
-  - Get invite link, rooms list, and user list for a team
+  - [Get invite link, rooms list, and user list for a team](api-team-info)
   - Create a room
   - Delete a room
   - Remove a user from a team
@@ -25,7 +25,7 @@ curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XGET
 
 # Methods
 
-## Get invite link, rooms list, and user list for a team
+## <a name="api-team-info"></a>Get invite link, rooms list, and user list for a team
 
 *GET `/domains/by-name/<team-name>`*
 
