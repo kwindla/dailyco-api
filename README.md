@@ -13,7 +13,7 @@ Stay tuned, because we're adding more features to the API! Right now we're worki
 
 All API requests are served by: `https://prod-ks.pluot.blue/`
 
-Methods that take argument bodies all expect JSON-formatted data. All data is returned as JSON.
+Methods that take argument bodies all expect JSON-formatted data. All data is returned as JSON. All methods return JSON objects that include the fields documented below, but the objects may have **additional** fields, as well, as we add to the API. Please be lenient in the data you accept, and also don't count on receiving any data other than what is documented here.
 
 To use the API you need a Daily.co developer token. Right now, we're in beta. If you'd like to try out the API, please contact us at help@daily.co. We'll create a token for you.
 
@@ -49,13 +49,47 @@ Returns a team invite link, a list of rooms, and a list of users.
   }
 ```
 
-### Failure: 
+### Failure
 
-Returns an error object, with a message field:
+Returns an error object, with a message field. 
 
 ```
   { error: { message: "message" } }
 ```
+
+A team invite link looks like "https://d.daily.co/?tk=sCSla44kOd2d". To be added to a team, a user must click on that link and either create a Daily account or log into an existing account. (If a user has already logged in, then the link will just add the user to the team and then redirect straight to the user's Daily dashboard.)
+
+Note that users are guaranteed to have an email address and role, but they may not have provided a name and an avatarSrc.
+
+## Create a room
+
+*POST to `/domains/by-name/<team-name>/room`*
+
+*Request body: `{ "name": <room-name> }`*
+
+```
+> curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XPOST -d '{"name":"room-a"}' http://prod-ks.pluot.blue/domains/by-name/my-awesome-team/room
+```
+
+### Success
+
+Returns information about the room.
+
+```
+  { "name": <room-name>,
+    "dialInPIN": <string-PIN>
+  }
+```
+
+### Failure
+
+Returns an error object, with a message field. 
+
+```
+  { error: { message: "message" } }
+```
+
+
 
 
 
