@@ -6,6 +6,7 @@ There are currently five API methods:
   - [Delete a room](#api-room-delete)
   - [Remove a user from a team](#api-user-remove)
   - [Create a new team (a new Daily.co domain)](#api-team-create)
+  - [Get information about meetings and participants](#api-meetings-info)
 
 Stay tuned, because we're adding more features to the API! Right now we're working on meeting recording and calls/usage data API methods. 
 
