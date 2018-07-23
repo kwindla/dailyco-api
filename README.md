@@ -190,9 +190,9 @@ Retrieves a list of meetings that have happened within a specific timeframe. Opt
 
 ### Success
 
-Returns a list of meetings and a boolean moreResults flag. Entries in the meetings list include the domain name, room name, meeting start time, meeting end time, and list of participants. Entries in the participants lists all include the user's email if the user is logged in, or 'guest', or 'Daily.co TV.' They also include meeting join and meeting leave times. All times returned are accurate to within one minute, but definitely not accurate to the nearest second!
+Returns a list of meetings and a boolean `moreResults` flag. Entries in the meetings list include the domain name, room name, meeting start time, meeting end time, and list of participants. Entries in the participants lists include the user's email if the user is logged in (or 'guest', or 'Daily.co TV', if not). They also include meeting join and meeting leave times. All times are accurate to within one minute, but definitely not accurate to the nearest second!
 
-This call returns information about a maximum of 100 meetings. A `moreResults` flag is set to true if more meetings were available for this time range.
+This call returns information about a maximum of 100 meetings. The `moreResults` flag is set to true if more meetings were available for this time range.
 
 ```
   { meetings: [ { domain: "my-awesome-team", room: "hello", mtgStart: "2018-07-21T22:07:11.000Z", mtgEnd: "2018-07-21T22:07:29.000Z", participants: [ {email: "guest", mtgJoin: "2018-07-22T20:35:57.000Z", mtgLeave: "2018-07-22T20:38:07.000Z"} ] } ], moreResults: false }
