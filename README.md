@@ -179,11 +179,13 @@ Returns an error object, with a message field.
 
 Retrieves a list of meetings that have happened within a specific timeframe. Optionally, you can also limit the results to meetings in a particular room. Start and end time arguments can either be UNIX timestamps or ISO Date Strings.
 
-**POST `/domains/by-name/<team-name>/meetings`
+**POST `/domains/by-name/<team-name>/meetings`**
 
-**Request body: `{ "start": <time range start time>, "end": <time range end time>, room: <optional room name> }`
+**Request body: `{ "start": <time range start time>, "end": <time range end time>, room: <optional room name> }`**
 
+```
 > curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XPOST -d '{"start":"2018-07-10T20:00:00.000Z", "end":"2018-07-25T00:00:00.000Z"}' https://prod-ks.pluot.blue/domains/by-name/my-awesome-team/meetings
+```
 
 ### Success
 
