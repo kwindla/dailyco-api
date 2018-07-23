@@ -7,7 +7,7 @@ info:
   contact:
     email: "help@daily.co"
 servers:
-  - url: https://prod-ks.pluot.
+  - url: https://prod-ks.pluot.blue
 security:
   - BearerAuth: []
 paths:
@@ -140,7 +140,49 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/TeamInfo'
                   - $ref: '#/components/schemas/ErrorInfo'
-            
+  /domains/by-name/{team-name}/meetings:
+    post:
+      summary: Get meetings info
+      description: Returns a list of meeting sessions, with information about participants
+      parameters:
+        - name: "team-name"
+          in: "path"
+          description: "name of team"
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: specify start and end time range, and optionally a room name to filter responses on. start and end arguments can be either UNIX timestamps or ISO Date Strings
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example: { start: "2018-07-21T00:00:00.000Z", end: "2018-07-22T00:00:00.000Z", room: "hello" }
+              properties:
+                start:
+                  description: search range start time
+                  oneOf:
+                    - type: integer
+                    - type: string
+                end:
+                  description: search range end time
+                  oneOf:
+                    - type: integer
+                    - type: string
+                room:
+                  description: room name
+                  type: string
+      responses:
+        200:
+          description: Meetings info or error string
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/MeetingsInfo'
+                  - $ref: '#/components/schemas/ErrorInfo'
+                  
 components:
   securitySchemes:
     BearerAuth:
@@ -211,5 +253,39 @@ components:
                 name: A. User
                 avatarSrc: https://some.server.com/image.jpg
                 role: member
-                
-                
+    MeetingsInfo:
+      type: object
+      properties:
+        moreResults:
+          description: call will return a maximum of 100 entries. If there are more available entries within the time range, this field will be set to true
+          type: boolean
+        meetings:
+          description: list of meeting sessions within the time range (and only for one room, if a room argument is given)
+          type: array
+          items:
+            type: object
+            properties:
+              domain:
+                type: string
+              room:
+                type: string
+              mtgStart:
+                description: time when second participant joined the meeting (so not the first, alone, participant). granularity to the nearest minute.
+                type: string
+              mtgEnd:
+                description: time when next to last participant left the meeting (so not the last, alone, participant). granularity to the nearest minute.
+                type: string
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email:
+                      description: participant's email address if logged in, or 'guest', or 'Daily.co TV'
+                      type: string
+                    mtgJoin:
+                      description: time the participant joined the meeting. granularity to the nearest minute.
+                      type: string
+                    mtgLeave:
+                      description: time the participant left the meeting. granularity to the nearest minute.
+                      type: string

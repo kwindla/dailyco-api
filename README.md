@@ -175,4 +175,30 @@ Returns an error object, with a message field.
   { error: { message: "message" } }
 ```
 
+## <a name="api-meetings-info"></a>Get information about meetings and participants
 
+Retrieves a list of meetings that have happened within a specific timeframe. Optionally, you can also limit the results to meetings in a particular room. Start and end time arguments can either be UNIX timestamps or ISO Date Strings.
+
+**POST `/domains/by-name/<team-name>/meetings`
+
+**Request body: `{ "start": <time range start time>, "end": <time range end time>, room: <optional room name> }`
+
+> curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XPOST -d '{"start":"2018-07-10T20:00:00.000Z", "end":"2018-07-25T00:00:00.000Z"}' https://prod-ks.pluot.blue/domains/by-name/my-awesome-team/meetings
+
+### Success
+
+Returns a list of meetings and a boolean moreResults flag. Entries in the meetings list include the domain name, room name, meeting start time, meeting end time, and list of participants. Entries in the participants lists all include the user's email if the user is logged in, or 'guest', or 'Daily.co TV.' They also include meeting join and meeting leave times. All times returned are accurate to within one minute, but definitely not accurate to the nearest second!
+
+This call returns information about a maximum of 100 meetings. A `moreResults` flag is set to true if more meetings were available for this time range.
+
+```
+  { meetings: [ { domain: "my-awesome-team", room: "hello", mtgStart: "2018-07-21T22:07:11.000Z", mtgEnd: "2018-07-21T22:07:29.000Z", participants: [ {email: "guest", mtgJoin: "2018-07-22T20:35:57.000Z", mtgLeave: "2018-07-22T20:38:07.000Z"} ] } ], moreResults: false }
+```
+
+### Failure
+
+Returns an error object, with a message field. 
+
+```
+  { error: { message: "message" } }
+```
