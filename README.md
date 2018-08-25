@@ -103,7 +103,7 @@ Returns an error object, with a message field.
   { error: { message: "message" } }
 ```
 
-## <a name="api-room-update"></a>
+## <a name="api-room-update"></a>Change the privacy setting of a room
 
 Changes the privacy setting of a room. Privacy setting values can be: `public`, `org`, or `private`. The `org` setting is what we refer to as "team" in the Daily.co application UI (our apologies for this divergence in nomenclature).
 
