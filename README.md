@@ -2,7 +2,8 @@ Using the Daily.co API, you can manage domains, teams, and video call rooms.
 
 There are currently five API methods:
   - [Get invite link, rooms list, and user list for a team](#api-team-info)
-  - [Create a room](#api-room-info)
+  - [Create a room](#api-room-create)
+  - [Change privacy setting for a room](#api-room-update)
   - [Delete a room](#api-room-delete)
   - [Remove a user from a team](#api-user-remove)
   - [Create a new team (a new Daily.co domain)](#api-team-create)
@@ -70,7 +71,7 @@ A team invite link looks like `https://d.daily.co/?tk=sCSla44kOd2d`. To be added
 
 Note that users are guaranteed to have an email address and role, but they may not have provided a name and an avatarSrc.
 
-## <a name="api-room-info"></a>Create a room
+## <a name="api-room-create"></a>Create a room
 
 Creates a new room. The new room needs a name. You can also optionally supply a privacy setting for the room. Privacy setting values can be: `public`, `org`, or `private`. Privacy defaults to `org`, which is what we call "team" in the Daily.co application UI (our apologies for this divergence in nomenclature).
 
@@ -92,6 +93,34 @@ Returns information about the room.
   { "name": <room-name>,
     "dialInPIN": <string-PIN>
   }
+```
+
+### Failure
+
+Returns an error object, with a message field. 
+
+```
+  { error: { message: "message" } }
+```
+
+## <a name="api-room-update"></a>
+
+Changes the privacy setting of a room. Privacy setting values can be: `public`, `org`, or `private`. The `org` setting is what we refer to as "team" in the Daily.co application UI (our apologies for this divergence in nomenclature).
+
+**POST to `/domains/by-name/<team-name>/room/<room-name>`**
+
+*Request body: `{ "privacy": <privacy setting> }`*
+
+```
+> curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XPOST -d '{"name":"room-a"}' http://prod-ks.pluot.blue/domains/by-name/my-awesome-team/room/my-awesome-room
+```
+
+### Success
+
+Returns an object that includes the field `updated: true`
+
+```
+  { "updated": true }
 ```
 
 ### Failure
