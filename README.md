@@ -72,9 +72,13 @@ Note that users are guaranteed to have an email address and role, but they may n
 
 ## <a name="api-room-info"></a>Create a room
 
+Creates a new room. The new room needs a name. You can also optionally supply a privacy setting for the room. Privacy setting values can be: `public`, `org`, or `private`. Privacy defaults to `org`, which is what we call "team" in the Daily.co application UI (our apologies for this divergence in nomenclature).
+
+The URL for of the new room (for joining meetings) will be: `https://<team-name>.daily.co/<room-name>`
+
 **POST to `/domains/by-name/<team-name>/room`**
 
-*Request body: `{ "name": <room-name> }`*
+*Request body: `{ "name": <room-name>, "privacy": <optional privacy setting> }`*
 
 ```
 > curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XPOST -d '{"name":"room-a"}' http://prod-ks.pluot.blue/domains/by-name/my-awesome-team/room
