@@ -73,7 +73,7 @@ Note that users are guaranteed to have an email address and role, but they may n
 
 ## <a name="api-room-create"></a>Create a room
 
-Creates a new room. The new room needs a name. You can also optionally supply a privacy setting for the room. Privacy setting values can be: `public`, `org`, or `private`. Privacy defaults to `org`, which is what we call "team" in the Daily.co application UI (our apologies for this divergence in nomenclature).
+Creates a new room. The new room needs a name. You can also optionally supply a privacy setting for the room. Privacy setting values can be: `public`, `org`, or `private`. Privacy defaults to `org`, which is what we call "team" in the Daily.co application UI (our apologies for this divergence in nomenclature). **The combined team name and room name must be 35 characters or less.**
 
 The URL for of the new room (for joining meetings) will be: `https://<team-name>.daily.co/<room-name>`
 
