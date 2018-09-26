@@ -1,4 +1,4 @@
-Using the Daily.co API, you can manage domains, teams, and video call rooms.
+Using the Daily.co API, you can manage domains, teams, and video call rooms. And you can embed video calls into any web app or web view.
 
 There are currently five API methods:
   - [Get invite link, rooms list, and user list for a team](#api-team-info)
@@ -9,7 +9,17 @@ There are currently five API methods:
   - [Create a new team (a new Daily.co domain)](#api-team-create)
   - [Get information about meetings and participants](#api-meetings-info)
 
-Stay tuned, because we're adding more features to the API! Right now we're working on meeting recording and calls/usage data API methods. 
+Stay tuned, because we're adding more features to the API! Right now we're working on meeting recording and calls/usage data API methods.
+
+# Embedding video calls
+
+To embed a live video call into any web page, just create an iframe that looks like this:
+
+```
+  <iframe src="[your-meeting-link]" allow="microphone; camera; autoplay">
+```
+
+Here's a [code sample](https://github.com/kwindla/dailyco-api/blob/master/embedding-sample.html). And that sample page [is here live for testing](https://kwindla.github.io/dailyco-api/embedding-sample.html).
 
 # API basics
 
