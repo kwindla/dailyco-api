@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>iframe test</title>
+
+<style>
+#call-div {
+  width: 340px;
+  height: 450px;
+  margin: 2em 0 0 0;
+  padding: 0;
+  border: 0;
+}
+#call-frame {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #eeeeee;
+  margin: 0;
+}
+
+</style>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+
+<div>
+meeting link: <input id="mtg-link" size="64" />
+<button type="button" onClick="joinCall()">join</button>
+<button type="button" onClick="leaveCall()">leave</button>
+</div>
+
+<div id="call-div" class="ui-widget-content">
+  <iframe id="call-frame" src="" allow="microphone; camera; autoplay">
+</iframe></div>
+
+<script>
+let callDiv = document.getElementById('call-div'),
+    callFrame = document.getElementById('call-frame'),
+    mtgInput = document.getElementById('mtg-link');
+
+function joinCall() {
+  callFrame.src = mtgInput.value;
+}
+function leaveCall() {
+  callFrame.src = "";
+}
+
+// return "submits" meeting link
+mtgInput.addEventListener('keyup', (e) => {
+  if (e.key === 'Enter') {
+    joinCall();
+  }
+});
+
+// jquery resizing
+$( function() {
+  $( "#call-div" ).resizable({
+    ghost: false,
+    resize: (event, ui) => {
+      console.log('iframe size:', ui.size);
+    }
+  });
+} );
+</script>
+
+</body>
+</html>
