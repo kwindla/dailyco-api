@@ -1,12 +1,11 @@
 Using the Daily.co API, you can manage domains, teams, and video call rooms. And you can embed video calls into any web app or web view.
 
-There are currently five API methods:
+There are currently six API methods:
   - [Get invite link, rooms list, and user list for a team](#api-team-info)
   - [Create a room](#api-room-create)
   - [Change privacy setting for a room](#api-room-update)
   - [Delete a room](#api-room-delete)
   - [Remove a user from a team](#api-user-remove)
-  - [Create a new team (a new Daily.co domain)](#api-team-create)
   - [Get information about meetings and participants](#api-meetings-info)
 
 Stay tuned, because we're adding more features to the API! Right now we're working on meeting recording and calls/usage data API methods.
@@ -191,33 +190,6 @@ Returns an error object, with a message field.
   { error: { message: "message" } }
 ```
 
-## <a name="api-team-create"></a>Create a new team
-
-Creates a new team (a new Daily.co domain). The new team will be owned by the user making the API call. You will need an additional permission attached to your developer token in order to use this method. Please contact us at help@daily.co if you have a use case for creating multiple teams/domains.
-
-**POST `/domains/claim`**
-
-**Request body: `{ "domain": <team-name> }`**
-
-```
-> curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -XPOST -d '{"domain":"awesome-team-2"}' https://prod-ks.pluot.blue/domains/claim
-```
-
-### Success
-
-Rreturns information about the domain. The returned object will have a number of fields, most of which are experimental. The object is guaranteed to include a `name` field.
-
-```
-    { name: "team-1", ... }
-```
-
-### Failure
-
-Returns an error object, with a message field. 
-
-```
-  { error: { message: "message" } }
-```
 
 ## <a name="api-meetings-info"></a>Get information about meetings and participants
 
