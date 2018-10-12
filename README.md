@@ -20,6 +20,12 @@ To embed a live video call into any web page, just create an iframe that looks l
 
 Here's a [code sample](https://github.com/kwindla/dailyco-api/blob/master/embedding-sample.html). And that sample page [is here live for testing](https://kwindla.github.io/dailyco-api/embedding-sample.html).
 
+## URL parameters
+
+Query string parameters appended to the meeting link can be used to modify the in-call UX:
+
+  - `name=<url-encoded human readable name string>` -- set the visible user name. This user name will also be part of the meeting attendance/analytics data.
+
 # API basics
 
 All API requests are served by: `https://prod-ks.pluot.blue/`
